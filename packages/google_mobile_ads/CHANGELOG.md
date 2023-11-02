@@ -1,3 +1,15 @@
+## 3.1.4
+* Fix syntax error
+
+## 3.1.3
+* Make library buildable on tvOS (part-III)
+
+## 3.1.2
+* Make library buildable on tvOS (part-II)
+
+## 3.1.1
+* Make library buildable on tvOS
+
 ## 3.1.0
 * Updates GMA iOS dependency to 10.9.0
 * Adds explicit UMP SDK 2.1.0 dependency for Android.

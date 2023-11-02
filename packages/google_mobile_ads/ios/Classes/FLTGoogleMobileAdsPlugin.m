@@ -13,19 +13,24 @@
 // limitations under the License.
 
 #import "FLTGoogleMobileAdsPlugin.h"
+#if TARGET_OS_IOS
 #import "FLTAdUtil.h"
 #import "FLTAppStateNotifier.h"
 #import "FLTConstants.h"
 #import "FLTNSString.h"
 #import "UserMessagingPlatform/FLTUserMessagingPlatformManager.h"
 @import webview_flutter_wkwebview;
+#endif
 
 @interface FLTGoogleMobileAdsPlugin ()
+#if TARGET_OS_IOS
 @property(nonatomic, retain) FlutterMethodChannel *channel;
 @property NSMutableDictionary<NSString *, id<FLTNativeAdFactory>>
     *nativeAdFactories;
+#endif
 @end
 
+#if TARGET_OS_IOS
 /// Initialization handler for GMASDK. Invokes result at most once.
 @interface FLTInitializationHandler : NSObject
 - (instancetype)initWithResult:(FlutterResult)result;
@@ -551,4 +556,23 @@
     result(FlutterMethodNotImplemented);
   }
 }
+#else
+@implementation FLTGoogleMobileAdsPlugin
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+	FlutterMethodChannel *channel =
+			[FlutterMethodChannel methodChannelWithName:@"plugins.flutter.io/google_mobile_ads"
+			                            binaryMessenger:[registrar messenger]];
+	FLTGoogleMobileAdsPlugin *instance = [[FLTGoogleMobileAdsPlugin alloc] init];
+	[registrar addMethodCallDelegate:instance channel:channel];
+}
+
+- (void)handleMethodCall:(FlutterMethodCall *)call
+                  result:(FlutterResult)result {
+	result(nil);
+}
+
+- (void)detachFromEngineForRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+	[registrar publish:[NSNull null]];
+}
+#endif
 @end

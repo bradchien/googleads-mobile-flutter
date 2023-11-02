@@ -14,6 +14,7 @@
 
 #import <Flutter/Flutter.h>
 
+#if TARGET_OS_IOS
 #import <GoogleMobileAds/GoogleMobileAds.h>
 
 #import "FLTAdInstanceManager_Internal.h"
@@ -45,12 +46,14 @@
                                customOptions:
                                    (NSDictionary *_Nullable)customOptions;
 @end
+#endif
 
 /**
  * Flutter plugin providing access to the Google Mobile Ads API.
  */
 @interface FLTGoogleMobileAdsPlugin : NSObject <FlutterPlugin>
 
+#if TARGET_OS_IOS
 /**
  * Registers a FLTMediationNetworkExtrasProvider used to provide mediation
  * extras when the plugin creates ad requests.
@@ -106,4 +109,5 @@
 + (id<FLTNativeAdFactory> _Nullable)
     unregisterNativeAdFactory:(id<FlutterPluginRegistry> _Nonnull)registry
                     factoryId:(NSString *_Nonnull)factoryId;
+#endif
 @end
